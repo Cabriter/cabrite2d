@@ -1,4 +1,4 @@
-#include <GLDW/glfw3.h>
+#include <GLFW/glfw3.h>
 #include <sys/time.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -17,7 +17,7 @@
 struct GLFW_context{
 	GLFWwindow* window;
 	bool is_press;
-}
+};
 
 static struct GLFW_context *CONTEXT = NULL;
 void font_init();
@@ -53,20 +53,20 @@ _glfw_pos_cb(GLFWwindow *window,double xpos,double ypos){
 
 static void
 _glfw_btn_cb(GLFWwindow *window,int button,int action,int mods){
-	CONTEXT->ispress = (action==GLFW_PRESS)?(true):(false);
+	CONTEXT->is_press = (action==GLFW_PRESS)?(true):(false);
 	double xpos,ypos;
-	gldwGetCursorPos(window,&xpos,&ypos);
+	glfwGetCursorPos(window,&xpos,&ypos);
 
 	switch(action){
 		case GLFW_PRESS:
 			cabrite2d_win_touch(xpos,ypos,TOUCH_BEGIN);
-			CONTEXT->ispress = true;
+			CONTEXT->is_press = true;
 			break;
-		case GLFE_RELEASE:
+		case GLFW_RELEASE:
 			cabrite2d_win_touch(xpos,ypos,TOUCH_END);
 			break;
 		default:
-			CONTEXT->ispress = false;
+			CONTEXT->is_press = false;
 			break;
 	}
 }
@@ -80,7 +80,7 @@ _glfw_init(struct GLFW_context *context){
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR,3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR,2);
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT,GL_TRUE);
-	glfwWindowHint(GLFW_OPENGL_PROFILE,GLFW_OPENGL_CORE_PROGILE);
+	glfwWindowHint(GLFW_OPENGL_PROFILE,GLFW_OPENGL_CORE_PROFILE);
 
 	context->window = glfwCreateWindow(WIDTH,HEIGHT,TITLE,NULL,NULL);
 	if(!context->window){
@@ -100,17 +100,17 @@ static void
 _version_info(){
 	const GLubyte *renderer = glGetString(GL_RENDERER);
 	const GLubyte *version = glGetString(GL_VERSION);
-	const GLubyte *glsl_version =glGetString(GL_SHADING_LANGUAGE);
+	const GLubyte *glsl_version =glGetString(GL_SHADING_LANGUAGE_VERSION);
 	printf("Renderer: %s\n",renderer);
 	printf("OPENGL version supported %s\n",version);
-	printf("GLSL: %s\n".glsl_version);
+	printf("GLSL: %s\n",glsl_version);
 }
 
 int main(int argc,char *argv[]){
 	struct GLFW_context ctx_value = {
-		.window = NULL;
-		.is_press = false;
-	}
+		.window = NULL,
+		.is_press = false,
+	};
 
 	CONTEXT = &ctx_value;
 	_glfw_init(CONTEXT);

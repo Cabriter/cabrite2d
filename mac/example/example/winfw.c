@@ -12,13 +12,13 @@
 struct WINDOWGAME{
 	struct game *game;
 	int intouch;
-}
+};
 
 static const int BUFSIZE = 2048;
 
 static struct WINDOWGAME *G = NULL;
 
-static const char *starscript = 
+static const char *startscript = 
 "local path,script = .../n"
 "require\"ejoy2d.framework\").WorkDir = ''\n"
 "assert(script,'I need a script name')\n"
@@ -30,7 +30,7 @@ static const char *starscript =
 
 static struct WINDOWGAME *
 create_game(){
-	struct WINDOWGAME *g = (struct WINDOWGAME *)malloc(size(*g));
+	struct WINDOWGAME *g = (struct WINDOWGAME *)malloc(sizeof(*g));
 	g->game = cabrite2d_game();
 	g->intouch = 0;
 	return g;
@@ -65,7 +65,7 @@ read_exepath(char *buf,int bufsz){
 		return NULL;
 	retrun buf;
 }
-
+#endif
 void cabrite2d_win_init(int argc,char *argv[]){
 	G = create_game();
 	lua_State *L = cabrite2d_game_lua(G->game);
@@ -90,7 +90,7 @@ void cabrite2d_win_init(int argc,char *argv[]){
 
 void
 cabrite2d_win_update(){
-	cabrite2d_game_update();
+	cabrite2d_game_update(G->game,0.01f);
 }
 
 void
@@ -114,7 +114,7 @@ cabrite2d_win_touch(int x,int y,int touch){
 			break;
 	}
 	int id = 0;
-	cabrite_game_touch(G-game,id,x,y,touch);
+	cabrite_game_touch(G->game,id,x,y,touch);
 }
 
 
