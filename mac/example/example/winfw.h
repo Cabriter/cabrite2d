@@ -11,6 +11,6 @@
 void cabrite2d_win_init();
 void cabrite2d_win_frame();
 void cabrite2d_win_update();
-voud cabrite2d_win_touch(int x,int y,int touch);
+void cabrite2d_win_touch(int x,int y,int touch);
 
 #endif
