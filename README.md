@@ -7,3 +7,5 @@ copy ejoy2d game engine
 * add scene manager module
 * add animation module
 * add state machine module
+#next feature
+* add matrix lib
