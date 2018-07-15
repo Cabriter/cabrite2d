@@ -9,3 +9,4 @@ copy ejoy2d game engine
 * add state machine module
 # next feature
 * add matrix lib
+* add render
